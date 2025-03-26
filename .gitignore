@@ -1,0 +1,36 @@
+# Python virtual environment
+venv/
+env/
+ENV/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+logs/
+*.log
+
+# Local configuration
+.env
+
+# Keep essential files
+!check_aiengineerpack.py
+!requirements.txt
+!volumes_found.txt
+!.github/workflows/check_website.yml
+!README.md 
