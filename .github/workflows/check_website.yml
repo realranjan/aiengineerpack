@@ -6,12 +6,18 @@ on:
     - cron: '0 8,20 * * *'
   workflow_dispatch:  # Allow manual trigger
 
+permissions:
+  contents: write
+
 jobs:
   check-website:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
         
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -32,8 +38,8 @@ jobs:
         
       - name: Commit and push if hash changed
         run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-          git add previous_hash.txt
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add previous_hash.txt || true
           git commit -m "Update website hash" || echo "No changes to commit"
-          git push 
+          git push origin HEAD:${{ github.ref }} || echo "Failed to push changes" 

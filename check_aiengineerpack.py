@@ -34,12 +34,17 @@ def check_website():
         'to': 'ranjanvernekar45@gmail.com'
     }
     
-    # Check if email credentials are set
+    # Print status for debugging
     if not email_config['username'] or not email_config['password']:
-        print("Email credentials not configured in environment variables")
-        return
+        print("⚠️ WARNING: Email credentials not configured in environment variables")
+        print("Username set:", bool(email_config['username']))
+        print("Password set:", bool(email_config['password']))
+        print("From set:", bool(email_config['from']))
+    else:
+        print("✅ Email credentials configured")
     
     url = "https://www.aiengineerpack.com/"
+    print(f"📋 Checking website: {url}")
     
     try:
         # Get website content
@@ -49,11 +54,16 @@ def check_website():
         response = requests.get(url, headers=headers, timeout=30)
         
         if response.status_code != 200:
-            print(f"Failed to retrieve website. Status code: {response.status_code}")
+            print(f"❌ Failed to retrieve website. Status code: {response.status_code}")
             return
         
+        print(f"✅ Website retrieved successfully (status {response.status_code})")
         content = response.text
         current_hash = hashlib.md5(content.encode()).hexdigest()
+        print(f"📊 Current website hash: {current_hash}")
+        
+        # Create directory if it doesn't exist
+        os.makedirs(os.path.dirname(os.path.abspath('previous_hash.txt')), exist_ok=True)
         
         # Get previous hash from GitHub Actions
         previous_hash_file = 'previous_hash.txt'
@@ -62,19 +72,35 @@ def check_website():
         if os.path.exists(previous_hash_file):
             with open(previous_hash_file, 'r') as f:
                 previous_hash = f.read().strip()
+            print(f"📁 Loaded previous hash: {previous_hash}")
+        else:
+            print(f"📁 No previous hash file found, will create one")
         
         # Save current hash for next time
         with open(previous_hash_file, 'w') as f:
             f.write(current_hash)
+        print(f"💾 Saved current hash to file")
         
         if not previous_hash:
-            print(f"First run, hash saved: {current_hash}")
+            print(f"ℹ️ First run, hash saved: {current_hash}")
+            subject = "AIEngineerPack Monitor Setup Complete"
+            message = f"""
+Your AIEngineerPack website monitor has been set up successfully!
+
+The script will now check for changes to the website twice daily (8:00 AM and 8:00 PM UTC).
+When changes are detected (such as a new Vol 4 release), you'll receive an email notification.
+
+Current website: {url}
+            """
+            
+            send_email_notification(subject, message, email_config)
+            print("📧 Setup confirmation email sent!")
             return
         
         # Check if the hash has changed
         if current_hash != previous_hash:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            print(f"Change detected at {timestamp}!")
+            print(f"🔔 Change detected at {timestamp}!")
             
             # Send notification
             subject = "AIEngineerPack Website Change Detected!"
@@ -87,12 +113,14 @@ Visit the website: {url}
             """
             
             send_email_notification(subject, message, email_config)
-            print("Notification sent!")
+            print("📧 Change notification email sent!")
         else:
-            print("No changes detected.")
+            print("ℹ️ No changes detected.")
             
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"❌ Error: {e}")
 
 if __name__ == "__main__":
-    check_website() 
+    print("🚀 Starting AIEngineerPack website check...")
+    check_website()
+    print("✅ Check completed!") 
