@@ -1,4 +1,4 @@
-name: Check AIEngineerPack Website
+name: Check AIEngineerPack for New Volumes
 
 on:
   schedule:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  check-website:
+  check-volumes:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,17 +29,23 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           
-      - name: Run website check
+      - name: Run volume check
         env:
+          # Email configuration (optional)
           EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          # Discord configuration (optional)
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # Telegram configuration (optional)
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python check_aiengineerpack.py
         
-      - name: Commit and push if hash changed
+      - name: Commit and push if volumes changed
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add previous_hash.txt || true
-          git commit -m "Update website hash" || echo "No changes to commit"
+          git add volumes_found.txt || true
+          git commit -m "Update tracked volumes" || echo "No changes to commit"
           git push origin HEAD:${{ github.ref }} || echo "Failed to push changes" 
