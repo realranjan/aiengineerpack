@@ -1,16 +1,16 @@
-name: Check Website for New Volumes
+name: Process Bot Commands
 
 on:
   schedule:
-    # Run at 8:00 AM and 8:00 PM UTC (which is approximately 4:00 AM/PM EDT)
-    - cron: '0 8,20 * * *'
+    # Run every hour to process commands more frequently
+    - cron: '0 * * * *'
   workflow_dispatch:  # Allow manual triggering
 
 permissions:
   contents: write
 
 jobs:
-  check_website:
+  process_commands:
     runs-on: ubuntu-latest
     
     steps:
@@ -39,25 +39,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests
         
-    - name: Run volume check
+    - name: Process bot commands
       env:
-        # Email configuration
-        EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
-        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-        EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
-        
-        # Discord configuration
-        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        
-        # Telegram configuration
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-      run: python check_aiengineerpack.py
+      run: python check_aiengineerpack.py --process-commands-only
       
-    - name: Commit volumes file if changed
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add volumes_found.txt
-        git diff --quiet && git diff --staged --quiet || git commit -m "Update volumes detected on website"
-        git push 
+    # We don't commit user data files to protect privacy 

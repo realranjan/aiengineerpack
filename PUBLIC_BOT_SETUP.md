@@ -68,6 +68,13 @@ To subscribe to notifications, users can:
 
 ## Advanced Features
 
+### Command Processing Frequency
+The bot now uses two GitHub Actions workflows:
+1. **Main volume check workflow** - Runs twice daily (8:00 AM and 8:00 PM UTC)
+2. **Command processing workflow** - Runs hourly to respond to user commands more quickly
+
+This means users should get responses to their commands within an hour at most, rather than having to wait for the main check to run.
+
 ### User Feedback
 The bot now includes a feedback system:
 - Users can send feedback using the `/feedback` command followed by their message
@@ -89,6 +96,16 @@ Notifications now include:
 - Direct link to the website
 - Total count of available volumes
 - Command shortcuts to check latest volumes
+
+### Privacy and Data Storage
+To protect user privacy, subscriber data and feedback are stored privately:
+
+- **Where data is stored**: All user data (subscriber IDs, feedback, statistics) is stored directly on GitHub's servers in workflow storage.
+- **Not committed to the repository**: These files are not committed to the public repository, ensuring subscriber privacy.
+- **Data persistence**: The data persists between workflow runs through GitHub Actions' workflow storage.
+- **Data protection**: Only the repository owner can access this data through GitHub Actions logs.
+
+This approach ensures that while your bot can serve many users, their identities remain private and are not publicly visible in the repository.
 
 ## Testing the Bot
 

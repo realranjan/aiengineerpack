@@ -33,4 +33,12 @@ logs/
 !requirements.txt
 !volumes_found.txt
 !.github/workflows/check_website.yml
-!README.md 
+!README.md
+
+# User data files (privacy)
+telegram_subscribers.json
+user_feedback.json
+bot_stats.json
+
+# Add a placeholder file to maintain directory structure
+!*/.gitkeep 

@@ -7,6 +7,7 @@ import argparse
 from email.message import EmailMessage
 from datetime import datetime
 import time
+import sys
 
 def send_email_notification(subject, message, email_config):
     try:
@@ -321,6 +322,7 @@ def handle_bot_commands(bot_token):
                         f"You're now subscribed to receive notifications when new AIEngineerPack volumes are released.\n\n"
                         f"📚 Latest volumes: {volume_list}\n\n"
                         f"🌐 Website: https://www.aiengineerpack.com/\n\n"
+                        f"⚠️ IMPORTANT: This bot runs on GitHub Actions, which means commands are only processed when the action runs (twice daily or when manually triggered). There will be a delay between sending commands and receiving responses.\n\n"
                         f"Commands:\n"
                         f"/status - Check monitor status\n"
                         f"/latest - Show current volumes\n"
@@ -699,8 +701,23 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Check AIEngineerPack website for new volumes")
     parser.add_argument("--dry-run", action="store_true", help="Check for new volumes but don't send notifications")
     parser.add_argument("--force-notify", action="store_true", help="Force send notification even if no new volumes")
+    parser.add_argument("--process-commands-only", action="store_true", help="Only process bot commands, don't check for new volumes")
     args = parser.parse_args()
     
     print("🚀 Starting AIEngineerPack volume check...")
-    check_for_new_volumes(dry_run=args.dry_run, force_notify=args.force_notify)
-    print("✅ Check completed!") 
+    
+    if args.process_commands_only:
+        print("🤖 Running in command processing mode only")
+        # Get Telegram bot token
+        telegram_bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+        if not telegram_bot_token:
+            print("❌ ERROR: TELEGRAM_BOT_TOKEN not set. Cannot process commands.")
+            sys.exit(1)
+        
+        # Process commands only
+        handle_bot_commands(telegram_bot_token)
+        print("✅ Command processing completed!")
+    else:
+        # Normal operation - check for new volumes
+        check_for_new_volumes(dry_run=args.dry_run, force_notify=args.force_notify)
+        print("✅ Check completed!") 
