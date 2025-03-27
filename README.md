@@ -16,6 +16,19 @@ This tool runs entirely on GitHub Actions (free forever) and:
 - Sends immediate notifications via Telegram, Discord, or email
 - Works 24/7 with zero maintenance
 
+## Telegram Bot Commands
+
+When you set up your own Telegram bot, users can interact with it using these commands:
+
+- `/start` - Subscribe to notifications and see current volumes
+- `/stop` - Unsubscribe from notifications
+- `/status` - Check bot status and subscriber count
+- `/latest` - See all currently available volumes
+- `/website` - Get a direct link to the AIEngineerPack website
+- `/feedback` - Send feedback to the bot administrator
+- `/stats` - View usage statistics (for subscribers only)
+- `/help` - Show all available commands
+
 ## Create Your Own Monitor (Optional)
 
 If you want your own private notifications instead of using the public channel:

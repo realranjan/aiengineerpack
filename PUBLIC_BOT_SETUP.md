@@ -60,7 +60,35 @@ To subscribe to notifications, users can:
 2. Send the `/start` command to subscribe
 3. Use `/stop` to unsubscribe
 4. Use `/status` to check the current monitoring status
-5. Use `/help` to see available commands
+5. Use `/latest` to see all currently available volumes
+6. Use `/website` to get a direct link to the AIEngineerPack site
+7. Use `/feedback` to send feedback to the bot administrator
+8. Use `/stats` to view usage statistics (subscribers only)
+9. Use `/help` to see available commands
+
+## Advanced Features
+
+### User Feedback
+The bot now includes a feedback system:
+- Users can send feedback using the `/feedback` command followed by their message
+- Feedback is stored in `user_feedback.json` in your repository
+- As the bot administrator, you can review this file to see user suggestions and comments
+
+### Usage Statistics
+The bot automatically tracks usage statistics:
+- Command usage frequency
+- Daily activity patterns
+- Subscriber count
+- User engagement
+
+This data is stored in `bot_stats.json` and can be viewed by subscribers using the `/stats` command.
+
+### Enhanced Notifications
+Notifications now include:
+- Detailed formatting with emojis for better readability
+- Direct link to the website
+- Total count of available volumes
+- Command shortcuts to check latest volumes
 
 ## Testing the Bot
 
