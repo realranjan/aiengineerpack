@@ -2,10 +2,10 @@
 
 A free, automatic tool that monitors [AIEngineerPack](https://www.aiengineerpack.com/) for new volume releases (like Vol 4) and sends instant notifications to your Telegram, Discord, or email.
 
-## Public Telegram Channel
+## BOT LINK 
 
-For instant updates without any setup, just join our public channel:
-**[@aiengineernotify](https://t.me/aiengineernotify)**
+For instant updates without any setup:
+**[@aiengineerpackbot](@aiengineerpackbot)**
 
 ## What This Does
 
