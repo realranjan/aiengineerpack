@@ -2,8 +2,10 @@ name: Check AIEngineerPack for New Volumes
 
 on:
   schedule:
-    # Run twice daily (at 8:00 and 20:00 UTC)
-    - cron: '0 8,20 * * *'
+    # Run twice daily at 8:00 AM and 8:00 PM Eastern Time (ET)
+    # ET is UTC-4 (summer) or UTC-5 (winter)
+    # 12:00 and 00:00 UTC should be 8:00 AM and 8:00 PM ET respectively
+    - cron: '0 12,0 * * *'
   workflow_dispatch:  # Allow manual trigger
 
 permissions:

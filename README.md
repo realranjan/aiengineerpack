@@ -2,16 +2,23 @@
 
 A free, automatic tool that monitors [AIEngineerPack](https://www.aiengineerpack.com/) for new volume releases (like Vol 4) and sends instant notifications to your Telegram, Discord, or email.
 
+## Public Telegram Channel
+
+For instant updates without any setup, just join our public channel:
+**[@aiengineernotify](https://t.me/aiengineernotify)**
+
 ## What This Does
 
 This tool runs entirely on GitHub Actions (free forever) and:
 
-- Checks twice daily for new AIEngineerPack volumes
+- Checks twice daily (8:00 AM & 8:00 PM US Eastern Time) for new AIEngineerPack volumes
 - Detects when volumes beyond Vol 1, 2, and 3 appear
 - Sends immediate notifications via Telegram, Discord, or email
 - Works 24/7 with zero maintenance
 
-## Setup (5 Minutes)
+## Create Your Own Monitor (Optional)
+
+If you want your own private notifications instead of using the public channel:
 
 ### 1. Fork This Repository
 
@@ -67,7 +74,7 @@ You'll get a confirmation message if everything works!
 
 ## That's It!
 
-Your monitor is now running automatically. It will check for new AIEngineerPack volumes twice daily and notify you as soon as new ones (like Vol 4) appear. No further action needed!
+Your monitor is now running automatically. It will check for new AIEngineerPack volumes twice daily (8:00 AM & 8:00 PM Eastern Time) and notify you as soon as new ones (like Vol 4) appear. No further action needed!
 
 ## Testing
 
