@@ -5,7 +5,7 @@ A free, automatic tool that monitors [AIEngineerPack](https://www.aiengineerpack
 ## BOT LINK 
 
 For instant updates without any setup:
-**[aiengineerpackbot](t.me/aiengineerpackbot)**
+**[@aiengineerpackbot](https://t.me/aiengineerpackbot)**
 
 ## What This Does
 
