@@ -42,17 +42,32 @@ def send_discord_notification(message, webhook_url):
 def send_telegram_notification(message, bot_token, chat_id):
     try:
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        
+        # Handle different chat_id formats
+        # If it's a channel username, make sure it starts with @
+        if isinstance(chat_id, str) and chat_id.strip().startswith('@'):
+            formatted_chat_id = chat_id.strip()
+        # If it looks like a channel ID but doesn't have -100 prefix, add it
+        elif isinstance(chat_id, str) and chat_id.strip().isdigit() and not chat_id.startswith('-100'):
+            formatted_chat_id = f"-100{chat_id.strip()}"
+        else:
+            formatted_chat_id = chat_id
+            
         data = {
-            "chat_id": chat_id,
+            "chat_id": formatted_chat_id,
             "text": message,
             "parse_mode": "HTML"
         }
+        
+        print(f"Sending Telegram notification to chat_id: {formatted_chat_id}")
         response = requests.post(url, data=data)
+        
         if response.status_code == 200:
             print("Telegram notification sent successfully")
             return True
         else:
             print(f"Failed to send Telegram notification. Status code: {response.status_code}")
+            print(f"Response content: {response.text}")
             return False
     except Exception as e:
         print(f"Failed to send Telegram notification: {e}")
